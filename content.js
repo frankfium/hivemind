@@ -35,12 +35,16 @@ let currentSettings = {
   showEmptyState: false,
   startMinimized: true
 };
+
+// Track current stream to detect navigation
+let currentStreamUrl = '';
+let currentChannel = '';
 const messageCounts = {};
 const messageTimestamps = {}; // track most recent occurrence of each message
 let trendingTexts = [];
 const processedIdMap = new Map();
 const processedIdQueue = [];
-const processedElements = new WeakMap();
+let processedElements = new WeakMap();
 const ELEMENT_REPROCESS_GRACE_MS = 120;
 const PROCESSED_ID_LIMIT = 2000;
 const messageTokens = new Map();
@@ -132,6 +136,44 @@ function updateSettings(newSettings) {
   schedulePanelUpdate();
 }
 
+// Clear all message data when navigating to a new stream
+function clearMessageData() {
+  // Clear all message tracking data
+  Object.keys(messageCounts).forEach(key => delete messageCounts[key]);
+  Object.keys(messageTimestamps).forEach(key => delete messageTimestamps[key]);
+  messageTokens.clear();
+  trendingTexts = [];
+  recent.length = 0;
+  
+  // Clear processed message tracking
+  processedIdMap.clear();
+  processedIdQueue.length = 0;
+  processedElements = new WeakMap();
+  
+  // Reset panel content to force update
+  lastPanelContent = '';
+  
+  info('navigation', 'Cleared message data for new stream');
+  schedulePanelUpdate();
+}
+
+// Detect stream/channel changes
+function checkForStreamChange() {
+  const currentUrl = window.location.href;
+  const urlMatch = currentUrl.match(/twitch\.tv\/([^\/\?]+)/);
+  const newChannel = urlMatch ? urlMatch[1] : '';
+  
+  // Check if we've navigated to a different stream/channel
+  if (currentChannel && currentChannel !== newChannel) {
+    info('navigation', `Stream changed from ${currentChannel} to ${newChannel}`);
+    clearMessageData();
+  }
+  
+  // Update tracking variables
+  currentStreamUrl = currentUrl;
+  currentChannel = newChannel;
+}
+
 // Listen for settings updates from popup
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'SETTINGS_UPDATED') {
@@ -204,6 +246,30 @@ function normalizeText(s) {
     .replace(/\s+/g, ' ')
     .trim()
     .toLowerCase();
+}
+
+// TODO: Implement partial text recognition for v1.1
+// This will allow fuzzy matching of similar messages to catch variations
+// and consolidate trending counts for messages that are essentially the same
+function findSimilarMessage(newMessage, existingMessages) {
+  // Future implementation:
+  // 1. Calculate similarity using Levenshtein distance or Jaro-Winkler
+  // 2. Group similar messages under a canonical version
+  // 3. Increment count when similarity threshold is met (e.g., 85% similar)
+  // 4. Handle cases like "PogChamp" vs "pogchamp" vs "POGCHAMP"
+  // 5. Add settings for similarity threshold and minimum length
+  
+  // For now, return null to use exact matching
+  return null;
+}
+
+// TODO: Add similarity calculation function
+function calculateSimilarity(str1, str2) {
+  // Future implementation:
+  // Use string similarity algorithms to determine how similar two messages are
+  // Return percentage (0-100) of similarity
+  // Consider using libraries like 'string-similarity' or implementing Levenshtein distance
+  return 0;
 }
 
 function recordMessage(text, tokens, preNormalized) {
@@ -1045,9 +1111,20 @@ window.hivemindDebug = {
 async function initializeHivemind() {
   info('init', 'Starting');
   await loadSettings();
+  
+  // Initialize stream tracking
+  checkForStreamChange();
+  
   startHeaderAttachPolling();
   startChatObserverPolling();
   startWindowTrimTimer();
+  
+  // Set up periodic stream change detection
+  setInterval(checkForStreamChange, 2000); // Check every 2 seconds
+  
+  // Also listen for navigation events (for faster detection)
+  window.addEventListener('popstate', checkForStreamChange);
+  
   // updatePanel() will be called when panel is attached
 }
 
