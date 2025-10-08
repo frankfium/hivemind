@@ -1,0 +1,189 @@
+/*
+ * Hivemind for Twitch - Panel Styles
+ * Copyright (C) 2024 Frank Fiumara
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+#hivemind-panel {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    background: rgba(47, 47, 53, .9);
+    border: 1px solid rgba(253, 234, 70, 0.1);
+    color: #efeff1;
+    font-family: "Roobert", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 7px 16px 7px 20px;
+    border-radius: 20px 0 0 20px;
+    z-index: 9999;
+    width: 250px;
+    transition: all 0.2s ease;
+}
+
+#hivemind-panel:hover {
+    background: rgba(255, 193, 7, 1);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-50%) translateY(-1px);
+}
+
+#hivemind-panel.hm-inline:hover {
+    background: rgba(255, 193, 7, 1);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+#hivemind-panel.hm-inline {
+    position: relative;
+    top: auto;
+    right: auto;
+    transform: none;
+    background: rgba(47, 47, 53, .9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 6px 12px 6px 16px;
+    width: auto;
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    margin-left: 8px;
+}
+
+#hivemind-panel.hm-inline {
+    cursor: pointer;
+}
+
+#hivemind-panel.hm-inline .header {
+    margin-bottom: 0;
+}
+
+#hivemind-panel .title .count {
+    display: inline-block;
+    background: rgba(83, 83, 95, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 2px 6px;
+    margin-left: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #efeff1;
+    min-width: 16px;
+    text-align: center;
+}
+
+#hivemind-panel.hm-inline .toggle { display: none; }
+#hivemind-panel.hm-inline.open .toggle { display: flex; }
+
+#hivemind-panel.hm-inline .entries {
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    margin-bottom: 6px;
+    width: 300px;
+    max-height: 360px;
+    overflow: auto;
+    background: rgba(24, 24, 24, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 6px;
+    box-shadow: 0 -6px 16px rgba(0, 0, 0, 0.4);
+    z-index: 10000;
+}
+
+#hivemind-panel.hm-inline.open .entries { display: block; }
+
+#hivemind-panel .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+#hivemind-panel .title {
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #efeff1;
+}
+
+#hivemind-panel .title .hivemind-icon {
+    width: 20px;
+    height: 20px;
+    transition: opacity 0.2s ease;
+}
+
+#hivemind-panel:hover .title .hivemind-icon {
+    opacity: 1;
+}
+
+#hivemind-panel .toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+#hivemind-panel .entries {
+    max-height: 320px;
+    overflow: hidden;
+}
+
+#hivemind-panel .entry {
+    padding: 6px;
+    margin: 4px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+}
+
+#hivemind-panel .entry:hover {
+    background: rgba(255,255,255,0.06);
+    cursor: pointer;
+}
+
+#hivemind-panel .index {
+    font-weight: bold;
+    color: #ffb800;
+    margin-right: 8px;
+}
+
+#hivemind-panel .msg {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+#hivemind-panel .hm-emote {
+    height: 1.2em;
+    width: auto;
+    vertical-align: text-bottom;
+    margin: 0 2px;
+}
+
+#hivemind-panel .empty {
+    opacity: 0.8;
+    padding: 6px;
+}
+
+#hivemind-panel .flash {
+    background: rgba(255,255,255,0.2) !important;
+}
+

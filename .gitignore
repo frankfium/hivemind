@@ -1,0 +1,104 @@
+# Chrome Extension Development
+# Ignore packed extensions
+*.crx
+*.zip
+
+# Ignore private keys for extension signing
+*.pem
+private_key.pem
+public_key.pem
+
+# Ignore Chrome extension development files
+chrome-extension-debug.log
+extension-debug.log
+
+# Node.js (if you add build tools later)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Logs
+*.log
+logs/
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# nyc test coverage
+.nyc_output
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+
+# Build outputs (if you add build tools)
+dist/
+build/
+out/
+
+# Test files (if you add testing)
+test/
+tests/
+__tests__/
+*.test.js
+*.spec.js
+
+# Documentation build (if you add docs generation)
+docs/build/
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Local development files
+local/
+dev/
+development/
+
+# Package manager lock files (optional - you might want to keep these)
+# package-lock.json
+# yarn.lock

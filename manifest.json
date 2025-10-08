@@ -1,0 +1,41 @@
+{
+    "manifest_version": 3,
+    "name": "Hive Mind for Twitch",
+    "version": "1.0",
+    "description": "Copy trending chat instantly with Shift+1-4. Created by @rmtj",
+    "icons": {
+        "16": "icon.png",
+        "32": "icon.png",
+        "48": "icon.png",
+        "128": "icon.png"
+    },
+    "permissions": [
+        "clipboardWrite",
+        "activeTab",
+        "scripting",
+        "storage"
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_title": "Hivemind Settings"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.twitch.tv/*"
+            ],
+            "js": [
+                "content.js"
+            ],
+            "css": [
+                "panel.css"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["icon.png", "temp.png"],
+            "matches": ["*://*.twitch.tv/*"]
+        }
+    ]
+}
